@@ -47,6 +47,7 @@ def identificar_token(token):
 # Função para ler o arquivo C, gerar os tokens e escrever a saída
 def analisar_codigo_c(arquivo_entrada, arquivo_saida):
     with open(arquivo_entrada, 'r') as entrada, open(arquivo_saida, 'w') as saida:
+        #lendo e separando cada linha do arquivo em C
         linhas = entrada.readlines()
         
         # Usando a biblioteca regex para separar tokens
