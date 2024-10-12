@@ -80,6 +80,42 @@ def verificar_fim_linha(linha, numero_linha):
             return f"Aviso: A linha {numero_linha} pode estar faltando um ponto e virgula.\n"
     return ""
 
+def verificar_delimitadores(linhas):
+    """
+    Verifica se todos os delimitadores ('()', '[]', '{}') estão presentes e balanceados.
+    """
+    pilha = []  # Pilha para armazenar os delimitadores de abertura
+    pares_delimitadores = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
+    delimitadores_abertura = pares_delimitadores.keys()
+    delimitadores_fechamento = pares_delimitadores.values()
+
+    erros = []  # Lista para armazenar mensagens de erro
+
+    for numero_linha, linha in enumerate(linhas, start=1):
+        for char in linha:
+            if char in delimitadores_abertura:
+                pilha.append((char, numero_linha))  # Adiciona o delimitador de abertura e sua linha correspondente à pilha
+            elif char in delimitadores_fechamento:
+                if not pilha:
+                    # Se a pilha está vazia, mas encontramos um delimitador de fechamento, temos um erro
+                    erros.append(f"Erro: Delimitador de fechamento '{char}' na linha {numero_linha} não tem um correspondente de abertura.")
+                else:
+                    delimitador_abertura, linha_abertura = pilha.pop()
+                    if pares_delimitadores[delimitador_abertura] != char:
+                        # Se o delimitador não corresponde ao esperado, é um erro
+                        erros.append(f"Erro: Delimitador '{delimitador_abertura}' aberto na linha {linha_abertura} não corresponde ao fechamento '{char}' na linha {numero_linha}.")
+
+    # Se ainda houver delimitadores de abertura na pilha, significa que eles não foram fechados
+    while pilha:
+        delimitador_abertura, linha_abertura = pilha.pop()
+        erros.append(f"Erro: Delimitador de abertura '{delimitador_abertura}' na linha {linha_abertura} não foi fechado.")
+
+    return erros
+
 def analisar_codigo_c(arquivo_entrada, arquivo_saida):
     """
     Analisa o código C fornecido, identifica os tokens e verifica se cada linha termina com ';'.
@@ -127,7 +163,12 @@ def analisar_codigo_c(arquivo_entrada, arquivo_saida):
             aviso = verificar_fim_linha(linha, numero_linha)
             if aviso:
                 saida.write(aviso)
-            print("-"*60)
+
+        # Verificar a ausência de delimitadores balanceados
+        erros_delimitadores = verificar_delimitadores(linhas)
+        for erro in erros_delimitadores:
+            saida.write(erro + "\n")
+            print(erro)
 
 # -----------------------------------------------
 # FUNÇÃO PRINCIPAL

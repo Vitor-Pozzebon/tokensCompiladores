@@ -1,4 +1,8 @@
 int main() {
     //TESTE COMENTARIO
-    printf("Hello, World!");
+    int a = 1;
+    int vetor[10];
+    if(a == 1) {
+        printf("Hello, World!");
+    }
 }
