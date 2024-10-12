@@ -12,7 +12,8 @@ PALAVRAS_CHAVE = [
     "auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else",
     "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register", "restrict",
     "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", 
-    "void", "volatile", "while"
+    "void", "volatile", "while", "return", "main", "printf", "scanf", "include", "define", "else",
+    "NULL", "true", "false", "bool", "string", "class", "delete"
 ]
 
 OPERADORES = [
