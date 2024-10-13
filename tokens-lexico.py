@@ -77,7 +77,10 @@ def verificar_fim_linha(linha, numero_linha):
     if linha_sem_espacos and not (linha_sem_espacos.endswith(';') or linha_sem_espacos.endswith('{') or linha_sem_espacos.endswith('}')):
         # Ignorar blocos de controle (como if, else, while, etc.) que não precisam de ';'
         if not any(linha_sem_espacos.startswith(palavra) for palavra in ['if', 'else', 'while', 'for', 'switch', 'do']):
+            print("\n" + "*"*60 + "\n")  
             print(f"Aviso: A linha {numero_linha} pode estar faltando um ponto e virgula.")
+            print("\n" + "*"*60 + "\n")
+            print("-"*60 + "\n") 
             return f"Aviso: A linha {numero_linha} pode estar faltando um ponto e virgula.\n"
     return ""
 
@@ -103,17 +106,17 @@ def verificar_delimitadores(linhas):
             elif char in delimitadores_fechamento:
                 if not pilha:
                     # Se a pilha está vazia, mas encontramos um delimitador de fechamento, temos um erro
-                    erros.append(f"Erro: Delimitador de fechamento '{char}' na linha {numero_linha} não tem um correspondente de abertura.")
+                    erros.append(f"Erro: Delimitador de fechamento '{char}' na linha {numero_linha} nao tem um correspondente de abertura.")
                 else:
                     delimitador_abertura, linha_abertura = pilha.pop()
                     if pares_delimitadores[delimitador_abertura] != char:
                         # Se o delimitador não corresponde ao esperado, é um erro
-                        erros.append(f"Erro: Delimitador '{delimitador_abertura}' aberto na linha {linha_abertura} não corresponde ao fechamento '{char}' na linha {numero_linha}.")
+                        erros.append(f"Erro: Delimitador '{delimitador_abertura}' aberto na linha {linha_abertura} nao corresponde ao fechamento '{char}' na linha {numero_linha}.")
 
     # Se ainda houver delimitadores de abertura na pilha, significa que eles não foram fechados
     while pilha:
         delimitador_abertura, linha_abertura = pilha.pop()
-        erros.append(f"Erro: Delimitador de abertura '{delimitador_abertura}' na linha {linha_abertura} não foi fechado.")
+        erros.append(f"Erro: Delimitador de abertura '{delimitador_abertura}' na linha {linha_abertura} nao foi fechado.")
 
     return erros
 
@@ -159,17 +162,25 @@ def analisar_codigo_c(arquivo_entrada, arquivo_saida):
                     saida.write(f"LINHA: {numero_linha}, TOKEN: '{token}', TIPO: {tipo_token}, CODIGO: {codigo_token}\n")
                     print(f"LINHA: {numero_linha}, TOKEN: '{token}', TIPO: {tipo_token}, CODIGO: {codigo_token}")
             
+            saida.write("-"*60 + "\n")
             print("-"*60)
             # Verificar se a linha termina com ";"
             aviso = verificar_fim_linha(linha, numero_linha)
             if aviso:
+                saida.write("\n" + "*"*60 + "\n")    
                 saida.write(aviso)
+                saida.write("*"*60 + "\n")  
+                saida.write("\n" + "-"*60 + "\n")
 
         # Verificar a ausência de delimitadores balanceados
         erros_delimitadores = verificar_delimitadores(linhas)
         for erro in erros_delimitadores:
+            saida.write("\n" + "*"*60 + "\n")
             saida.write(erro + "\n")
+            saida.write("*"*60 + "\n")
+            print("\n" + "*"*60 + "\n")
             print(erro)
+            print("\n" + "*"*60 + "\n")
 
 # -----------------------------------------------
 # FUNÇÃO PRINCIPAL
