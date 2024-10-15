@@ -59,7 +59,14 @@ def identificar_token(token):
         if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", token):
             return "IDENTIFICADOR", CÓDIGO_TOKENS["IDENTIFICADOR"]
         else:
-            return "INVALIDO", None  
+            return "INVALIDO", None 
+        
+def remove_empty_lines(text):
+    # Usa splitlines para dividir a string em linhas, e filtra as que não estão vazias
+    lines = text.splitlines()
+    non_empty_lines = [line for line in lines if line.strip()]
+    # Junta as linhas não vazias de volta em uma única string
+    return "\n".join(non_empty_lines) 
 
 def remover_comentarios(codigo):
     """
@@ -67,6 +74,7 @@ def remover_comentarios(codigo):
     """
     codigo_sem_comentarios = re.sub(r"/\*.*?\*/", "", codigo, flags=re.DOTALL)
     codigo_sem_comentarios = re.sub(r"//.*", "", codigo_sem_comentarios)
+    codigo_sem_comentarios = remove_empty_lines(codigo_sem_comentarios)
     return codigo_sem_comentarios
 
 def verificar_fim_linha(linha, numero_linha):
@@ -132,9 +140,16 @@ def analisar_codigo_c(arquivo_entrada, arquivo_saida):
         return
 
     codigo = remover_comentarios(codigo)
+    print("Codigo Analisado:\n")
+    print(codigo)
+    print("*"*60)
     linhas = codigo.split('\n')
 
     with open(arquivo_saida, 'w') as saida:
+        # Impressão do código analisado no arquivo de saída
+        saida.write("Codigo analisado:\n")
+        saida.write(codigo)
+        saida.write("\n" + "*"*60 + "\n")
         for numero_linha, linha in enumerate(linhas, start=1):
             if not linha.strip():
                 continue
@@ -148,7 +163,7 @@ def analisar_codigo_c(arquivo_entrada, arquivo_saida):
                 (\d+) |                        
                 ([+\-*/%=<>&|^~!;:,?.()\[\]{}])   
             """
-
+            
             tokens = re.finditer(padrao, linha, re.VERBOSE)
 
             for match in tokens:
