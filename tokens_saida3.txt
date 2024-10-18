@@ -1,9 +1,11 @@
 Codigo analisado:
 int main() {
-    int a = 1
+    int a = 1;
+    float b = 1;
     int vetor[10];
     if(a == 1) {
         printf("Hello, World!");
+    }
 }
 ************************************************************
 LINHA: 1, TOKEN: 'int', TIPO: PALAVRACHAVE, CODIGO: 1
@@ -16,37 +18,44 @@ LINHA: 2, TOKEN: 'int', TIPO: PALAVRACHAVE, CODIGO: 1
 LINHA: 2, TOKEN: 'a', TIPO: IDENTIFICADOR, CODIGO: 2
 LINHA: 2, TOKEN: '=', TIPO: OPERADOR, CODIGO: 3
 LINHA: 2, TOKEN: '1', TIPO: NUMERO, CODIGO: 5
+LINHA: 2, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
-
-************************************************************
-Aviso: A linha 2 pode estar faltando um ponto e virgula.
-************************************************************
-
-------------------------------------------------------------
-LINHA: 3, TOKEN: 'int', TIPO: PALAVRACHAVE, CODIGO: 1
-LINHA: 3, TOKEN: 'vetor', TIPO: IDENTIFICADOR, CODIGO: 2
-LINHA: 3, TOKEN: '[', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 3, TOKEN: '10', TIPO: NUMERO, CODIGO: 5
-LINHA: 3, TOKEN: ']', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 3, TOKEN: 'float', TIPO: PALAVRACHAVE, CODIGO: 1
+LINHA: 3, TOKEN: 'b', TIPO: IDENTIFICADOR, CODIGO: 2
+LINHA: 3, TOKEN: '=', TIPO: OPERADOR, CODIGO: 3
+LINHA: 3, TOKEN: '1', TIPO: NUMERO, CODIGO: 5
 LINHA: 3, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
-LINHA: 4, TOKEN: 'if', TIPO: PALAVRACHAVE, CODIGO: 1
-LINHA: 4, TOKEN: '(', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 4, TOKEN: 'a', TIPO: IDENTIFICADOR, CODIGO: 2
-LINHA: 4, TOKEN: '==', TIPO: OPERADOR, CODIGO: 3
-LINHA: 4, TOKEN: '1', TIPO: NUMERO, CODIGO: 5
-LINHA: 4, TOKEN: ')', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 4, TOKEN: '{', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 4, TOKEN: 'int', TIPO: PALAVRACHAVE, CODIGO: 1
+LINHA: 4, TOKEN: 'vetor', TIPO: IDENTIFICADOR, CODIGO: 2
+LINHA: 4, TOKEN: '[', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 4, TOKEN: '10', TIPO: NUMERO, CODIGO: 5
+LINHA: 4, TOKEN: ']', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 4, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
-LINHA: 5, TOKEN: 'printf', TIPO: PALAVRACHAVE, CODIGO: 1
+LINHA: 5, TOKEN: 'if', TIPO: PALAVRACHAVE, CODIGO: 1
 LINHA: 5, TOKEN: '(', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 5, TOKEN: '"Hello, World!"', TIPO: STRING, CODIGO: 6
+LINHA: 5, TOKEN: 'a', TIPO: IDENTIFICADOR, CODIGO: 2
+LINHA: 5, TOKEN: '==', TIPO: OPERADOR, CODIGO: 3
+LINHA: 5, TOKEN: '1', TIPO: NUMERO, CODIGO: 5
 LINHA: 5, TOKEN: ')', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 5, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 5, TOKEN: '{', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
-LINHA: 6, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 6, TOKEN: 'printf', TIPO: PALAVRACHAVE, CODIGO: 1
+LINHA: 6, TOKEN: '(', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 6, TOKEN: '"Hello, World!"', TIPO: STRING, CODIGO: 6
+LINHA: 6, TOKEN: ')', TIPO: DELIMITADOR, CODIGO: 4
+LINHA: 6, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
+------------------------------------------------------------
+LINHA: 7, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
+------------------------------------------------------------
+LINHA: 8, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
 
 ************************************************************
-Erro: Delimitador de abertura '{' na linha 1 nao foi fechado.
+Identificador 'int' repetido. Ultima ocorrencia na linha 4.
+************************************************************
+
+************************************************************
+Identificador 'a' repetido. Ultima ocorrencia na linha 5.
 ************************************************************

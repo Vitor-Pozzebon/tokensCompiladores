@@ -7,6 +7,7 @@ int main() {
     123
     */
     int a = 1;
+    float b = 1;
     int vetor[10];
     if(a == 1) {
         printf("Hello, World!");

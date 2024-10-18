@@ -1,5 +1,6 @@
 import os
 import re
+from collections import defaultdict
 
 # Limpar a tela (funciona no Windows; para outros sistemas, ajuste conforme necessário)
 os.system("cls" if os.name == "nt" else "clear")
@@ -39,6 +40,10 @@ REGEX_PATTERNS = {
     "CHAR": r"^\'(\\.|[^\'\\])\'$"            
 }
 
+# -----------------------------------------------
+# FUNÇÃO PARA IDENTIFICAR OS TOKENS DO CÓDIGO EM C
+# -----------------------------------------------
+
 def identificar_token(token):
     """
     Identifica o tipo de um token específico.
@@ -60,13 +65,61 @@ def identificar_token(token):
             return "IDENTIFICADOR", CÓDIGO_TOKENS["IDENTIFICADOR"]
         else:
             return "INVALIDO", None 
-        
+
+# -----------------------------------------------
+# FUNÇÃO PARA VERIFICAR IDENTIFICADORES REPETIDOS
+# -----------------------------------------------
+
+def identificar_token_repetido(token):
+    """
+    Identifica o tipo de um token específico.
+    """
+    if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", token):  # Identificadores válidos (variáveis, funções, etc.)
+        return "IDENTIFICADOR"
+    else:
+        return "OUTRO"
+
+def verificar_identificadores_repetidos(linhas):
+    """
+    Verifica se há identificadores repetidos no código fornecido.
+    """
+    identificadores = defaultdict(int)  # Dicionário para contar ocorrências de cada identificador
+    repetidos = {}  # Dicionário para armazenar identificadores repetidos
+    mensagens = []  # Lista para armazenar mensagens de erro
+
+    for numero_linha, linha in enumerate(linhas, start=1):
+        tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_]*", linha)  # Identificadores válidos
+
+        for token in tokens:
+            if identificar_token_repetido(token) == "IDENTIFICADOR":
+                identificadores[token] += 1
+                if identificadores[token] > 1:
+                    repetidos[token] = numero_linha  # Armazenar a linha onde foi encontrado o repetido
+
+    # Mostrar identificadores repetidos, se houver
+    if repetidos:
+        for identificador, linha in repetidos.items():
+            print(f"Identificador '{identificador}' repetido. Ultima ocorrencia na linha {linha}.")
+            mensagens.append(f"Identificador '{identificador}' repetido. Ultima ocorrencia na linha {linha}.")
+    else:
+        print("Nenhum identificador repetido encontrado.")
+        mensagens.append("Nenhum identificador repetido encontrado.")
+    return mensagens
+
+# -----------------------------------------------
+# FUNÇÃO PARA REMOVER LINHAS VAZIAS DO CÓDIGO
+# -----------------------------------------------
+
 def remove_empty_lines(text):
     # Usa splitlines para dividir a string em linhas, e filtra as que não estão vazias
     lines = text.splitlines()
     non_empty_lines = [line for line in lines if line.strip()]
     # Junta as linhas não vazias de volta em uma única string
     return "\n".join(non_empty_lines) 
+
+# -----------------------------------------------
+# FUNÇÃO PARA REMOVER OS COMENTÁRIOS DO CÓDIGO
+# -----------------------------------------------
 
 def remover_comentarios(codigo):
     """
@@ -76,6 +129,10 @@ def remover_comentarios(codigo):
     codigo_sem_comentarios = re.sub(r"//.*", "", codigo_sem_comentarios)
     codigo_sem_comentarios = remove_empty_lines(codigo_sem_comentarios)
     return codigo_sem_comentarios
+
+# -----------------------------------------------
+# FUNÇÃO PARA VERIFICAR O ";" NO FINAL DA LINHA
+# -----------------------------------------------
 
 def verificar_fim_linha(linha, numero_linha):
     """
@@ -91,6 +148,10 @@ def verificar_fim_linha(linha, numero_linha):
             print("-"*60 + "\n") 
             return f"Aviso: A linha {numero_linha} pode estar faltando um ponto e virgula.\n"
     return ""
+
+# -----------------------------------------------
+# FUNÇÃO PARA VERIFICAR ABERTURA E FECHAMENTO DOS DELIMITADORES
+# -----------------------------------------------
 
 def verificar_delimitadores(linhas):
     """
@@ -127,6 +188,10 @@ def verificar_delimitadores(linhas):
         erros.append(f"Erro: Delimitador de abertura '{delimitador_abertura}' na linha {linha_abertura} nao foi fechado.")
 
     return erros
+
+# -----------------------------------------------
+# FUNÇÃO GERAL PARA ANALISAR O CÓDIGO FORNECIDO
+# -----------------------------------------------
 
 def analisar_codigo_c(arquivo_entrada, arquivo_saida):
     """
@@ -195,6 +260,16 @@ def analisar_codigo_c(arquivo_entrada, arquivo_saida):
             saida.write("*"*60 + "\n")
             print("\n" + "*"*60 + "\n")
             print(erro)
+            print("\n" + "*"*60 + "\n")
+
+        # Verificar identificadores repetidos
+        mensagens_repetidos = verificar_identificadores_repetidos(linhas)
+        for mensagem in mensagens_repetidos:
+            saida.write("\n" + "*"*60 + "\n")
+            saida.write(mensagem + "\n")
+            saida.write("*"*60 + "\n")
+            print("\n" + "*"*60 + "\n")
+            print(mensagem)
             print("\n" + "*"*60 + "\n")
 
 # -----------------------------------------------
