@@ -67,14 +67,16 @@ def identificar_token(token):
             return "INVALIDO", None 
 
 # -----------------------------------------------
-# FUNÇÃO PARA VERIFICAR IDENTIFICADORES REPETIDOS
+# FUNÇÕES PARA VERIFICAR IDENTIFICADORES REPETIDOS
 # -----------------------------------------------
 
 def identificar_token_repetido(token):
     """
     Identifica o tipo de um token específico.
     """
-    if re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", token):  # Identificadores válidos (variáveis, funções, etc.)
+    if token in PALAVRAS_CHAVE:
+        return "PALAVRACHAVE"
+    elif re.match(r"^[A-Za-z_][A-Za-z0-9_]*$", token):  # Identificadores válidos (variáveis, funções, etc.)
         return "IDENTIFICADOR"
     else:
         return "OUTRO"
@@ -85,7 +87,7 @@ def verificar_identificadores_repetidos(linhas):
     """
     identificadores = defaultdict(int)  # Dicionário para contar ocorrências de cada identificador
     repetidos = {}  # Dicionário para armazenar identificadores repetidos
-    mensagens = []  # Lista para armazenar mensagens de erro
+    mensagens = []  # Lista para armazenar mensagens
 
     for numero_linha, linha in enumerate(linhas, start=1):
         tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_]*", linha)  # Identificadores válidos

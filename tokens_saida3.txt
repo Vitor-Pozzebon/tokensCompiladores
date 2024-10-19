@@ -1,7 +1,7 @@
 Codigo analisado:
 int main() {
     int a = 1;
-    float b = 1;
+    float a = 1;
     int vetor[10];
     if(a == 1) {
         printf("Hello, World!");
@@ -21,7 +21,7 @@ LINHA: 2, TOKEN: '1', TIPO: NUMERO, CODIGO: 5
 LINHA: 2, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
 LINHA: 3, TOKEN: 'float', TIPO: PALAVRACHAVE, CODIGO: 1
-LINHA: 3, TOKEN: 'b', TIPO: IDENTIFICADOR, CODIGO: 2
+LINHA: 3, TOKEN: 'a', TIPO: IDENTIFICADOR, CODIGO: 2
 LINHA: 3, TOKEN: '=', TIPO: OPERADOR, CODIGO: 3
 LINHA: 3, TOKEN: '1', TIPO: NUMERO, CODIGO: 5
 LINHA: 3, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
@@ -51,10 +51,6 @@ LINHA: 7, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
 LINHA: 8, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
-
-************************************************************
-Identificador 'int' repetido. Ultima ocorrencia na linha 4.
-************************************************************
 
 ************************************************************
 Identificador 'a' repetido. Ultima ocorrencia na linha 5.
