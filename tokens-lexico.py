@@ -40,9 +40,9 @@ REGEX_PATTERNS = {
     "CHAR": r"^\'(\\.|[^\'\\])\'$"            
 }
 
-# -----------------------------------------------
+# ----------------------------------------------------
 # FUNÇÃO PARA IDENTIFICAR OS TOKENS DO CÓDIGO EM C
-# -----------------------------------------------
+# ----------------------------------------------------
 
 def identificar_token(token):
     """
@@ -66,10 +66,36 @@ def identificar_token(token):
         else:
             return "INVALIDO", None 
 
-# -----------------------------------------------
+# ----------------------------------------------------
 # FUNÇÕES PARA VERIFICAR IDENTIFICADORES REPETIDOS
-# -----------------------------------------------
+# ----------------------------------------------------
 
+# Verifica se a variável está cercada por delimitadores em uma linha de código para que não seja contada como repetida
+def verificar_variavel_em_delimitador(variavel, linha):
+    """
+    Verifica se a variável está cercada por delimitadores em uma linha de código.
+    """
+
+    delimitadores = {
+    'parenteses': r'\(.*?\)',
+    'colchetes': r'\[.*?\]',
+    'chaves': r'\{.*?\}',
+    'aspas_duplas': r'\".*?\"',
+    'aspas_simples': r'\'.*?\''
+    }   
+
+    for nome, padrao in delimitadores.items():
+        # Cria um padrão que verifica se a variável está dentro de um dos delimitadores
+        padrao_completo = re.compile(padrao)
+        
+        # Verifica se a variável está dentro dos delimitadores definidos
+        if re.search(padrao_completo, linha):
+            if variavel in re.search(padrao_completo, linha).group():
+                return True
+
+    return False
+
+# Identifica o tipo de um token específico para verificar se é um identificador
 def identificar_token_repetido(token):
     """
     Identifica o tipo de um token específico.
@@ -81,6 +107,7 @@ def identificar_token_repetido(token):
     else:
         return "OUTRO"
 
+# Verifica se há identificadores repetidos no código fornecido
 def verificar_identificadores_repetidos(linhas):
     """
     Verifica se há identificadores repetidos no código fornecido.
@@ -94,17 +121,18 @@ def verificar_identificadores_repetidos(linhas):
 
         for token in tokens:
             if identificar_token_repetido(token) == "IDENTIFICADOR":
-                identificadores[token] += 1
-                if identificadores[token] > 1:
-                    repetidos[token] = numero_linha  # Armazenar a linha onde foi encontrado o repetido
+                if verificar_variavel_em_delimitador(token, linha):
+                    continue
+                else:
+                    identificadores[token] += 1
+                    if identificadores[token] > 1:
+                        repetidos[token] = numero_linha  # Armazenar a linha onde foi encontrado o repetido
 
     # Mostrar identificadores repetidos, se houver
     if repetidos:
         for identificador, linha in repetidos.items():
-            print(f"Identificador '{identificador}' repetido. Ultima ocorrencia na linha {linha}.")
             mensagens.append(f"Identificador '{identificador}' repetido. Ultima ocorrencia na linha {linha}.")
     else:
-        print("Nenhum identificador repetido encontrado.")
         mensagens.append("Nenhum identificador repetido encontrado.")
     return mensagens
 
@@ -151,9 +179,9 @@ def verificar_fim_linha(linha, numero_linha):
             return f"Aviso: A linha {numero_linha} pode estar faltando um ponto e virgula.\n"
     return ""
 
-# -----------------------------------------------
+# ---------------------------------------------------------------
 # FUNÇÃO PARA VERIFICAR ABERTURA E FECHAMENTO DOS DELIMITADORES
-# -----------------------------------------------
+# ---------------------------------------------------------------
 
 def verificar_delimitadores(linhas):
     """

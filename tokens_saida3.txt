@@ -1,10 +1,10 @@
 Codigo analisado:
-int main() {
+int main() 
     int a = 1;
     float a = 1;
     int vetor[10];
     if(a == 1) {
-        printf("Hello, World!");
+        printf("Hello, World!")
     }
 }
 ************************************************************
@@ -12,7 +12,12 @@ LINHA: 1, TOKEN: 'int', TIPO: PALAVRACHAVE, CODIGO: 1
 LINHA: 1, TOKEN: 'main', TIPO: PALAVRACHAVE, CODIGO: 1
 LINHA: 1, TOKEN: '(', TIPO: DELIMITADOR, CODIGO: 4
 LINHA: 1, TOKEN: ')', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 1, TOKEN: '{', TIPO: DELIMITADOR, CODIGO: 4
+------------------------------------------------------------
+
+************************************************************
+Aviso: A linha 1 pode estar faltando um ponto e virgula.
+************************************************************
+
 ------------------------------------------------------------
 LINHA: 2, TOKEN: 'int', TIPO: PALAVRACHAVE, CODIGO: 1
 LINHA: 2, TOKEN: 'a', TIPO: IDENTIFICADOR, CODIGO: 2
@@ -45,7 +50,12 @@ LINHA: 6, TOKEN: 'printf', TIPO: PALAVRACHAVE, CODIGO: 1
 LINHA: 6, TOKEN: '(', TIPO: DELIMITADOR, CODIGO: 4
 LINHA: 6, TOKEN: '"Hello, World!"', TIPO: STRING, CODIGO: 6
 LINHA: 6, TOKEN: ')', TIPO: DELIMITADOR, CODIGO: 4
-LINHA: 6, TOKEN: ';', TIPO: DELIMITADOR, CODIGO: 4
+------------------------------------------------------------
+
+************************************************************
+Aviso: A linha 6 pode estar faltando um ponto e virgula.
+************************************************************
+
 ------------------------------------------------------------
 LINHA: 7, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
@@ -53,5 +63,9 @@ LINHA: 8, TOKEN: '}', TIPO: DELIMITADOR, CODIGO: 4
 ------------------------------------------------------------
 
 ************************************************************
-Identificador 'a' repetido. Ultima ocorrencia na linha 5.
+Erro: Delimitador de fechamento '}' na linha 8 nao tem um correspondente de abertura.
+************************************************************
+
+************************************************************
+Identificador 'a' repetido. Ultima ocorrencia na linha 3.
 ************************************************************

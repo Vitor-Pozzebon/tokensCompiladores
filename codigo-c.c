@@ -1,6 +1,6 @@
 //O código abaixo pode conter erros de escrita para fins de teste do código de analisador léxico
 
-int main() {
+int main() { 
     //TESTE COMENTARIO
     /*
     teste de varias linhas;
